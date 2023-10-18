@@ -10,7 +10,8 @@
 import java.util.*;
 
 public class HigherLower {
-    public static void main(String[] args) throws InterruptedException { // thread.sleep was not working without throwing interrupted exception
+    public static void main(String[] args) throws InterruptedException { // thread.sleep was not working without
+                                                                         // throwing interrupted exception
         // initilaizes scanner and variables
         Scanner userInput = new Scanner(System.in);
         Random rand = new Random();
@@ -54,7 +55,7 @@ public class HigherLower {
                 }
             } // ends while
               // checks if the number is valid
-            if (rounds < 0 || round == 0) {
+            if (rounds <= 0) {
                 fancy_text("Sorry, that number is not valid. Please try playing at a later time.", textSpeed,
                         messageShortDelay);
                 System.exit(0);
@@ -88,22 +89,23 @@ public class HigherLower {
                     if (userNumber < 0 || userNumber > 15) {
                         fancy_text("Sorry, that number is not valid. Please try playing at a later time.", textSpeed,
                                 messageLongDelay);
-                        break;
+                        System.exit(0);
                         // checks if it is the number
                     } else if (userNumber == randNum) {
                         fancy_text("Awh man, you got it right! The number was infact " + randNum, textSpeed,
                                 messageLongDelay);
                         score++;
                         break;
-                        // checks if the number is too high
+                        // checks if it is the first - third guess
                     } else if (i < 4) {
+                        // checks if the number is too high
                         if (userNumber > randNum) {
                             fancy_text("Your number is too high, please try again: ", textSpeed, messageShortDelay);
                             // checks if the number is too low
                         } else if (userNumber < randNum) {
                             fancy_text("Your number is too low, please try again!: ", textSpeed, messageShortDelay);
                         }
-                        // checks if it is that last guess
+                        // checks if it is the last guess
                     } else {
                         fancy_text("Sorry, you ran out of tries. The number was " + randNum
                                 + "! That means I win, HAHAHA 😂😂", textSpeed, messageLongDelay);
@@ -111,11 +113,16 @@ public class HigherLower {
                     }
                 } // ends for (game)
             } // ends for (rounds)
-              // prints out the score and asks user if they want to play again
-            fancy_text("\nLooks like you got " + score + " out of " + rounds + " correct! \nThanks for playing!",
+
+            // prints out the user's score
+            double scorePercentage = score / rounds * 100;
+            fancy_text(
+                    "\nLooks like you got " + score + " out of " + rounds + " correct!\nThat's "
+                            + String.format("%.2f", scorePercentage) + "%!\nThanks for playing!",
                     textSpeed, messageLongDelay);
             playing = false;
 
+            // Asks user to play again
             fancy_text("\nWould you like to play again? (y/n): ", textSpeed, 0);
             String playingString = userInput.next();
             if (playingString.equalsIgnoreCase("yes") || playingString.equalsIgnoreCase("y")) {
@@ -123,9 +130,9 @@ public class HigherLower {
                 score = 0;
                 round = 1;
                 i = 1;
-                fancy_text("\nOk, let's play again!", textSpeed, messageShortDelay);
+                fancy_text("Ok, let's play again!", textSpeed, messageShortDelay);
             } else {
-                fancy_text("\nOk, thanks for playing!", textSpeed, messageShortDelay);
+                fancy_text("Ok, thanks for playing!", textSpeed, messageShortDelay);
             }
         } // ends while (playing)
         userInput.close();
