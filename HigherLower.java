@@ -1,3 +1,5 @@
+package in_class_assignment;
+
 import java.util.*;
 
 public class HigherLower {
@@ -7,7 +9,7 @@ public class HigherLower {
         Scanner userInput = new Scanner(System.in);
         Random rand = new Random();
         int userNumber = 0;
-        int numGuesses = 2;
+        int numGuesses = 3;
         int rounds = 0;
         int round = 1;
         int score = 0;
@@ -30,7 +32,7 @@ public class HigherLower {
          * randNum = 4;
          */
 
-        // playing the game
+        // when actually playing the game (useful for restarting the game)
         boolean playing = true;
         while (playing) {
             fancy_text("\nHow many rounds would you like to play?: ", textSpeed, messageLongDelay);
@@ -45,19 +47,22 @@ public class HigherLower {
                 fancy_text("Okay, sounds good.", textSpeed, messageShortDelay);
             }
 
+            // stillPlaying boolean is useful for skipping to the very end when the user
+            // enters a 0 or negative number for rounds #
             while (stillPlaying) {
                 // loops through the rounds
                 for (round = 1; round <= rounds; round++) {
                     int randNum = rand.nextInt(15) + 1;
                     // a way for me to know approx what the number is (basically just
-                    // cheating/rigging it for myself lol)
+                    // cheating/rigging it for myself lol), plus it adds a fun element to the game
                     if (randNum <= 5) {
                         fancy_text("\nThis number is going to be difficult!", textSpeed, messageLongDelay);
                     } else if (randNum <= 10) {
-                        fancy_text("Don't worry, this will be a breeze!", textSpeed, randNum);
+                        fancy_text("\nDon't worry, this will be a breeze!", textSpeed, messageLongDelay);
                     } else {
                         fancy_text("\nYou got this!", textSpeed, messageLongDelay);
                     }
+
                     // asks user for the first number
                     fancy_text("\nROUND #" + round, textSpeed, messageShortDelay);
                     fancy_text("\nPlease enter your first guess between 1-15: ", textSpeed, messageShortDelay);
@@ -81,7 +86,7 @@ public class HigherLower {
 
                         // checks if it is the number
                         if (userNumber == randNum) {
-                            fancy_text("Awh man, you got it right! The number was infact " + randNum, textSpeed,
+                            fancy_text("Awh man, you got it right! The number was in fact " + randNum, textSpeed,
                                     messageLongDelay);
                             score++;
                             break;
@@ -101,10 +106,11 @@ public class HigherLower {
                             break;
                         }
                     } // ends for (game)
+
                 } // ends for (rounds)
 
                 // calculates and prints out the user's score
-                double scorePercentage = (score / rounds) * 100;
+                double scorePercentage = ((double)score/rounds) * 100;
                 fancy_text(
                         "\nLooks like you got " + score + " out of " + rounds + " correct!",
                         textSpeed, messageLongDelay);
@@ -118,11 +124,11 @@ public class HigherLower {
             String playingString = userInput.next();
             if (playingString.equalsIgnoreCase("yes") || playingString.equalsIgnoreCase("y")) {
                 // resets everything
-                stillPlaying = true;
-                playing = true;
                 score = 0;
                 round = 1;
                 i = 1;
+                stillPlaying = true;
+                playing = true;
                 fancy_text("Ok, let's play again!", textSpeed, messageShortDelay);
             } else {
                 fancy_text("Ok, thanks for playing!", textSpeed, messageShortDelay);
